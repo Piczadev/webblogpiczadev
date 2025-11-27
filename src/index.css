@@ -1,0 +1,44 @@
+/* Importamos las fuentes Inter y JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Aplicamos la fuente base y el color de fondo */
+    body {
+        @apply font-sans bg-[#050505] text-[#e5e5e5];
+    }
+
+    /* Scrollbar personalizado estilo Dark */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #050505;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+
+@layer components {
+    /* Optimizamos la tarjeta de cristal */
+    .glass-card {
+        @apply bg-[rgba(20,20,20,0.6)] border border-white/10;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Patrón de puntos de fondo */
+    .bg-dots {
+        background-image: radial-gradient(#333 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 0.2;
+    }
+}
