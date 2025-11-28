@@ -37,7 +37,7 @@ const USER_DATA = {
         {
             title: "pizzalabs.sol",
             subtitle: "SNS Domain",
-            url: "https://sns.id/domain?domain=pizzalabs",
+            url: "https://www.sns.id/domain/pizzalabs",
             type: "sns",
             icon: "box",
             colSpan: "col-span-1 md:col-span-3",
@@ -63,6 +63,16 @@ const USER_DATA = {
             icon: "instagram",
             colSpan: "col-span-1 md:col-span-2",
             bg: "bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500",
+            textColor: "text-white"
+        },
+        {
+            title: "Farcaster",
+            subtitle: "@piczadev.eth",
+            url: "https://farcaster.xyz/piczadev.eth",
+            type: "farcaster",
+            icon: "globe",
+            colSpan: "col-span-1 md:col-span-2",
+            bg: "bg-gradient-to-br from-[#8a63d2] to-[#4b2a99]",
             textColor: "text-white"
         },
         {
@@ -126,11 +136,38 @@ const USER_DATA = {
     skills: {
         "Programming Sorcery": ["JavaScript (ES6+)", "HTML5", "CSS3", "TypeScript", "Python"],
         "Frameworks & Libraries": ["React.js", "Vue.js", "Next.js", "Sass"],
+        "AI & LLM Alchemist": ["LLMs", "MCP", "Prompt Engineering", "Generative AI"],
         "Blockchain Enchanter": ["Smart Contracts", "Solidity", "TON Blockchain", "Web3"],
+        "Systems & IoT Artificer": ["Linux Servers", "Raspberry Pi", "IoT"],
+        "OS Trinity": ["macOS", "Linux", "Windows"],
         "Video Production": ["Adobe Premiere", "OBS Studio", "NDI Tools", "DaVinci Resolve"],
         "Toolbox of Wonders": ["Git", "Docker", "Node.js", "Figma", "Webpack"],
         "Security Sage": ["OSINT", "Nmap", "FOCA", "Kali Linux"]
-    }
+    },
+    workflow: [
+        {
+            title: "Second Brain (Obsidian)",
+            icon: "database",
+            description: "Automated knowledge base using PARA method (Projects, Areas, Resources, Archive).",
+            features: [
+                "Dataview Dashboards & YAML Metadata",
+                "Git Version Control & Obsidian Sync",
+                "Terminal Integration via URIs",
+                "Templater Automation"
+            ]
+        },
+        {
+            title: "Command Center (Raycast)",
+            icon: "terminal",
+            description: "Centralized control hub with 43+ extensions.",
+            features: [
+                "AI: Gemini, ChatGPT, Ollama, Warp Agent",
+                "Dev: GitHub, Linear, Vercel, JetBrains",
+                "System: Clean Keyboard, Menu Bar Toggle",
+                "Local Model Integration"
+            ]
+        }
+    ]
 };
 
 // --- Components ---
@@ -194,6 +231,31 @@ const ExperienceCard = ({ exp }) => (
     </div>
 );
 
+const WorkflowCard = ({ item }) => {
+    const Icon = item.icon === 'database' ? Database : Terminal;
+    return (
+        <div className="p-6 rounded-3xl bg-white/5 border border-white/10 mb-6 hover:bg-white/10 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-blue-500/10">
+                    <Icon size={20} className="text-blue-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+            </div>
+            <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                {item.description}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {item.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 font-mono">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500/50"></div>
+                        {feature}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const SkillGroup = ({ title, skills }) => (
     <div className="mb-6 break-inside-avoid">
         <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -256,9 +318,22 @@ export default function App() {
                             </div>
                             <h3 className="text-xl font-bold text-white">Professional Journey</h3>
                         </div>
-                        <div className="pl-2">
+                        <div className="pl-2 mb-12">
                             {USER_DATA.experience.map((exp, index) => (
                                 <ExperienceCard key={index} exp={exp} />
+                            ))}
+                        </div>
+
+                        {/* Workflow Section */}
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 rounded-lg bg-green-500/10">
+                                <Terminal size={20} className="text-green-400" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Workflow & Systems</h3>
+                        </div>
+                        <div>
+                            {USER_DATA.workflow.map((flow, index) => (
+                                <WorkflowCard key={index} item={flow} />
                             ))}
                         </div>
                     </div>
