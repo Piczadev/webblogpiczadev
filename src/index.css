@@ -6,6 +6,7 @@
 @tailwind utilities;
 
 @layer base {
+
     /* Aplicamos la fuente base y el color de fondo */
     body {
         @apply font-sans bg-[#050505] text-[#e5e5e5];
@@ -15,22 +16,27 @@
     ::-webkit-scrollbar {
         width: 8px;
     }
+
     ::-webkit-scrollbar-track {
         background: #050505;
     }
+
     ::-webkit-scrollbar-thumb {
         background: #333;
         border-radius: 4px;
     }
+
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
 }
 
 @layer components {
+
     /* Optimizamos la tarjeta de cristal */
     .glass-card {
-        @apply bg-[rgba(20,20,20,0.6)] border border-white/10;
+        background-color: rgba(20, 20, 20, 0.6);
+        @apply border border-white/10;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
@@ -40,5 +46,23 @@
         background-image: radial-gradient(#333 1px, transparent 1px);
         background-size: 24px 24px;
         opacity: 0.2;
+    }
+}
+
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }

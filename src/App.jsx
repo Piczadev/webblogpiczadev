@@ -2,251 +2,288 @@ import React, { useState } from 'react';
 import {
     Github, Twitter, Linkedin, Terminal,
     Database, Copy, Check, ExternalLink,
-    Layers, Zap, Globe, Code
+    Layers, Zap, Globe, Code, Youtube, Instagram, Send, Box,
+    Briefcase, Cpu, Sparkles
 } from 'lucide-react';
 
 // --- Data Configuration ---
 const USER_DATA = {
-    name: "Piczadev",
-    role: "Dev & Researcher",
-    bio: "Escepticismo pragmático. Deconstruyendo sistemas blockchain y automatizando el caos.",
-    location: "Puebla, MX",
+    name: "Yahir Rivera",
+    role: "Founder & CEO @PizzaLabs | Web3 Developer",
+    bio: "Building on Solana & EVM. Automating the chaos.",
     avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=Piczadev&backgroundColor=1f1f1f",
-    ethAddress: "0xOf73d...Ef725",
-    solAddress: "pizzalabs.sol",
-    socials: {
-        twitter: "https://twitter.com/piczadev",
-        github: "https://github.com/piczadev",
-        linkedin: "https://linkedin.com/in/piczadev",
-        farcaster: "https://warpcast.com/piczadev"
+    links: [
+        {
+            title: "piczadev.eth",
+            subtitle: "0xOf73d...Ef725",
+            url: "https://app.ens.domains/piczadev.eth",
+            type: "ens",
+            icon: "layers",
+            colSpan: "col-span-1 md:col-span-6",
+            bg: "bg-gradient-to-br from-blue-600 to-blue-800",
+            textColor: "text-white"
+        },
+        {
+            title: "piczadev.base.eth",
+            subtitle: "Basenames",
+            url: "https://www.base.org/name/piczadev",
+            type: "base",
+            icon: "zap",
+            colSpan: "col-span-1 md:col-span-6",
+            bg: "bg-gradient-to-br from-blue-500 to-white",
+            textColor: "text-blue-900",
+            isLight: true
+        },
+        {
+            title: "pizzalabs.sol",
+            subtitle: "SNS Domain",
+            url: "https://sns.id/domain?domain=pizzalabs",
+            type: "sns",
+            icon: "box",
+            colSpan: "col-span-1 md:col-span-3",
+            bg: "bg-[#141414]", // Dark minimalist
+            textColor: "text-white",
+            border: "border-white/10"
+        },
+        {
+            title: "YouTube",
+            subtitle: "@piczadev0s",
+            url: "https://www.youtube.com/@piczadev0s",
+            type: "youtube",
+            icon: "youtube",
+            colSpan: "col-span-1 md:col-span-3",
+            bg: "bg-[#FF0000]",
+            textColor: "text-white"
+        },
+        {
+            title: "Instagram",
+            subtitle: "@yha.piczadev",
+            url: "https://www.instagram.com/yha.piczadev/",
+            type: "instagram",
+            icon: "instagram",
+            colSpan: "col-span-1 md:col-span-2",
+            bg: "bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500",
+            textColor: "text-white"
+        },
+        {
+            title: "Telegram",
+            subtitle: "@PiczaDev",
+            url: "https://t.me/PiczaDev",
+            type: "telegram",
+            icon: "send",
+            colSpan: "col-span-1 md:col-span-2",
+            bg: "bg-[#229ED9]",
+            textColor: "text-white"
+        },
+        {
+            title: "GitHub",
+            subtitle: "@piczadev",
+            url: "https://github.com/piczadev",
+            type: "github",
+            icon: "github",
+            colSpan: "col-span-1 md:col-span-2",
+            bg: "bg-[#181717]",
+            textColor: "text-white"
+        }
+    ],
+    experience: [
+        {
+            company: "PizzaLabs",
+            role: "Chief Executive Officer",
+            period: "Nov 2024 - Present",
+            description: "Leading development of Web3 solutions, building scalable crypto communities, and empowering users through blockchain tech.",
+            type: "Founder"
+        },
+        {
+            company: "PiczaDev",
+            role: "Chief Technology Officer",
+            period: "Nov 2023 - Present",
+            description: "Innovation in Blockchain & Digital Safety. Web3 Solutions & Crypto Communities.",
+            type: "Founder"
+        },
+        {
+            company: "TON Startup (Telegram)",
+            role: "Blockchain Developer",
+            period: "Aug 2024 - Present",
+            description: "Developing decentralized applications (dApps) on the TON Blockchain using smart contracts.",
+            type: "Contract"
+        },
+        {
+            company: "YouTube",
+            role: "Content Creator (Tech & Crypto)",
+            period: "Jan 2019 - Present",
+            description: "Educational content creator with 50k+ subscribers. Expert in video editing, streaming tech (OBS, NDI Tools), and tech tutorials.",
+            type: "Creator"
+        },
+        {
+            company: "Solana Labs",
+            role: "Blockchain Developer Intern",
+            period: "2024",
+            description: "Developed and tested magical smart contracts. Crafted dApps that elevate user experience.",
+            type: "Internship"
+        }
+    ],
+    skills: {
+        "Programming Sorcery": ["JavaScript (ES6+)", "HTML5", "CSS3", "TypeScript", "Python"],
+        "Frameworks & Libraries": ["React.js", "Vue.js", "Next.js", "Sass"],
+        "Blockchain Enchanter": ["Smart Contracts", "Solidity", "TON Blockchain", "Web3"],
+        "Video Production": ["Adobe Premiere", "OBS Studio", "NDI Tools", "DaVinci Resolve"],
+        "Toolbox of Wonders": ["Git", "Docker", "Node.js", "Figma", "Webpack"],
+        "Security Sage": ["OSINT", "Nmap", "FOCA", "Kali Linux"]
     }
 };
 
-const HARDWARE_STATS = [
-    { label: "Main Station", value: "Mac Mini M4 (16GB)", icon: "apple" },
-    { label: "Secondary", value: "Acer Nitro RTX 3050", icon: "windows" },
-    { label: "Network", value: "500 Mbps (Ethernet)", icon: "wifi" },
-    { label: "Ping", value: "8 ms", icon: "activity" },
-    { label: "Printer", value: "Creality V3 SE + Klipper", icon: "printer" },
-];
-
 // --- Components ---
 
-const CopyButton = ({ textToCopy, label }) => {
-    const [copied, setCopied] = useState(false);
-
-    const handleCopy = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(textToCopy);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        }
-    };
+const BentoCard = ({ item }) => {
+    const Icon = {
+        layers: Layers,
+        zap: Zap,
+        box: Box,
+        youtube: Youtube,
+        instagram: Instagram,
+        send: Send,
+        github: Github
+    }[item.icon] || ExternalLink;
 
     return (
-        <button
-            onClick={handleCopy}
-            className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-all border border-white/5 text-xs font-mono text-gray-400 hover:text-white"
+        <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`
+                group relative overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
+                ${item.colSpan}
+                ${item.bg}
+                ${item.border ? `border ${item.border}` : 'border-0'}
+            `}
         >
-            {copied ? <Check size={12} className="text-green-400"/> : <Copy size={12} />}
-            <span>{label || textToCopy}</span>
-        </button>
+            {/* Background Pattern for some cards */}
+            {item.type === 'base' && (
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            )}
+
+            <div className={`relative z-10 flex flex-col h-full justify-between ${item.textColor}`}>
+                <div className="flex justify-between items-start">
+                    <div className={`p-2 rounded-full ${item.isLight ? 'bg-black/10' : 'bg-white/20'} backdrop-blur-sm`}>
+                        <Icon size={24} />
+                    </div>
+                    <ExternalLink size={16} className={`opacity-50 group-hover:opacity-100 transition-opacity ${item.textColor}`} />
+                </div>
+
+                <div className="mt-8">
+                    <h3 className="text-2xl font-bold tracking-tight">{item.title}</h3>
+                    <p className={`text-sm font-medium opacity-80 mt-1 font-mono`}>{item.subtitle}</p>
+                </div>
+            </div>
+        </a>
     );
 };
 
-const BentoCard = ({ children, className = "", colSpan = "col-span-1", href }) => {
-    const Wrapper = href ? 'a' : 'div';
-    const props = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
+const ExperienceCard = ({ exp }) => (
+    <div className="relative pl-8 pb-8 border-l border-white/10 last:pb-0">
+        <div className="absolute left-[-5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500 ring-4 ring-[#050505]"></div>
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+            <h4 className="text-lg font-bold text-white">{exp.role}</h4>
+            <span className="text-xs font-mono text-gray-500">{exp.period}</span>
+        </div>
+        <div className="text-sm text-purple-400 mb-2 font-medium">{exp.company}</div>
+        <p className="text-sm text-gray-400 leading-relaxed max-w-2xl">
+            {exp.description}
+        </p>
+    </div>
+);
 
-    return (
-        <Wrapper
-            {...props}
-            className={`glass-card rounded-3xl p-6 relative overflow-hidden group hover:border-white/20 transition-all duration-300 ${colSpan} ${className}`}
-        >
-            {children}
-        </Wrapper>
-    );
-};
-
-const StatRow = ({ label, value }) => (
-    <div className="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
-        <span className="text-xs text-gray-500 font-mono">{label}</span>
-        <span className="text-xs text-gray-300 font-mono">{value}</span>
+const SkillGroup = ({ title, skills }) => (
+    <div className="mb-6 break-inside-avoid">
+        <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <Sparkles size={12} className="text-yellow-500" />
+            {title}
+        </h4>
+        <div className="flex flex-wrap gap-2">
+            {skills.map((skill) => (
+                <span key={skill} className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 text-xs text-gray-300 hover:bg-white/10 hover:text-white transition-colors cursor-default">
+                    {skill}
+                </span>
+            ))}
+        </div>
     </div>
 );
 
 export default function App() {
-    const [showStats, setShowStats] = useState(false);
-    // Generamos el ID una sola vez para evitar cambios al re-renderizar
-    const [sessionId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
-
     return (
-        <div className="min-h-screen relative flex flex-col items-center justify-center p-4 sm:p-8 overflow-x-hidden selection:bg-purple-500/30">
+        <div className="min-h-screen bg-[#050505] text-white p-4 sm:p-8 flex justify-center">
+            <main className="w-full max-w-4xl animate-fade-in">
 
-            {/* Background Noise/Effect */}
-            <div className="fixed inset-0 bg-dots z-0 pointer-events-none"></div>
-            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] z-0 pointer-events-none"></div>
-
-            {/* Main Container */}
-            <main className="w-full max-w-5xl animate-fade-in z-10">
-                
-                {/* Header Section */}
-                <header className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12 px-2">
-                    <div className="relative">
-                        <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/10 relative z-10 bg-[#111]">
+                {/* Header */}
+                <header className="flex flex-col items-center text-center mb-12 mt-8">
+                    <div className="relative mb-6 group">
+                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#1a1a1a] relative z-10 bg-[#111] transition-transform duration-500 group-hover:scale-105">
                             <img src={USER_DATA.avatar} alt="Avatar" className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute -bottom-1 -right-1 bg-green-500 w-5 h-5 rounded-full border-4 border-[#050505] z-20" title="Online"></div>
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 -z-10"></div>
                     </div>
-                    <div>
-                        <h1 className="text-4xl font-bold text-white tracking-tight mb-1">{USER_DATA.name}</h1>
-                        <p className="text-gray-400 text-lg flex items-center gap-2">
-                            {USER_DATA.role}
-                            <span className="w-1 h-1 rounded-full bg-gray-600"></span>
-                            <span className="text-sm text-gray-500">Solana & EVM</span>
-                        </p>
-                        <p className="text-gray-500 text-sm mt-2 max-w-md leading-relaxed">
-                            {USER_DATA.bio}
-                        </p>
+
+                    <h1 className="text-4xl font-bold tracking-tight mb-2">{USER_DATA.name}</h1>
+                    <p className="text-gray-400 text-lg">{USER_DATA.role}</p>
+
+                    {/* Mini Social Row */}
+                    <div className="flex gap-4 mt-6">
+                        <a href="#" className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-gray-400 hover:text-white">
+                            <Twitter size={20} />
+                        </a>
+                        <a href="#" className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-gray-400 hover:text-white">
+                            <Linkedin size={20} />
+                        </a>
                     </div>
                 </header>
 
-                {/* Bento Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
-
-                    {/* 1. Large Main Card (ENS Style Identity) */}
-                    <BentoCard colSpan="col-span-1 sm:col-span-2 md:col-span-2" className="flex flex-col justify-between bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border-blue-500/20">
-                        <div className="flex justify-between items-start">
-                            <div className="p-2 bg-blue-500/20 rounded-lg">
-                                <Layers className="text-blue-400" size={24} />
-                            </div>
-                            <span className="px-2 py-1 rounded-full bg-black/30 text-[10px] font-mono text-blue-200 border border-blue-500/30">ENS</span>
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold text-white mb-1">piczadev.eth</h3>
-                            <div className="flex items-center gap-2">
-                                <span className="text-blue-200/60 text-sm font-mono">{USER_DATA.ethAddress}</span>
-                                <CopyButton textToCopy="0xOf73d...Ef725" label="Copy" />
-                            </div>
-                        </div>
-                    </BentoCard>
-
-                    {/* 2. Base/Solana Card */}
-                    <BentoCard colSpan="col-span-1 sm:col-span-2 md:col-span-2" className="flex flex-col justify-between bg-white/5">
-                        <div className="absolute inset-0 bg-dots opacity-50 pointer-events-none"></div>
-                        <div className="relative z-10 flex justify-between items-start">
-                            <div className="p-2 bg-purple-500/20 rounded-lg">
-                                <Zap className="text-purple-400" size={24} />
-                            </div>
-                            <span className="px-2 py-1 rounded-full bg-black/30 text-[10px] font-mono text-purple-200 border border-purple-500/30">SOL / BASE</span>
-                        </div>
-                        <div className="relative z-10">
-                            <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
-                                {USER_DATA.solAddress}
-                            </h3>
-                            <div className="flex gap-2">
-                                <span className="text-xs text-gray-500 font-mono bg-black/40 px-2 py-1 rounded">piczadev.base.eth</span>
-                            </div>
-                        </div>
-                    </BentoCard>
-
-                    {/* 3. Obsidian / Brain */}
-                    <BentoCard href="#" className="group flex flex-col items-center justify-center text-center gap-4 hover:bg-purple-900/10 cursor-pointer">
-                        <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Database className="text-purple-400" size={24} />
-                        </div>
-                        <div>
-                            <h4 className="font-semibold text-white">Second Brain</h4>
-                            <p className="text-xs text-gray-500 mt-1">Obsidian Vault</p>
-                        </div>
-                        <ExternalLink size={14} className="absolute top-4 right-4 text-gray-600 group-hover:text-white transition-colors" />
-                    </BentoCard>
-
-                    {/* 4. Twitter / X */}
-                    <BentoCard href={USER_DATA.socials.twitter} className="flex flex-col items-center justify-center bg-black hover:bg-neutral-900 border-neutral-800">
-                        <Twitter size={32} className="text-white mb-2" />
-                        <span className="text-xs text-gray-500">@piczadev</span>
-                    </BentoCard>
-
-                    {/* 5. GitHub (Large Vertical or Square) */}
-                    <BentoCard href={USER_DATA.socials.github} colSpan="col-span-1 sm:col-span-2" className="flex flex-row items-center gap-6 hover:bg-white/5">
-                        <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                            <Github size={32} className="text-white" />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold text-white">GitHub</h3>
-                            <p className="text-sm text-gray-400 mt-1">Code, Automation scripts & Research.</p>
-                            <div className="flex gap-2 mt-3">
-                                <span className="text-[10px] bg-yellow-500/10 text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/20">JS</span>
-                                <span className="text-[10px] bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded border border-blue-500/20">Python</span>
-                                <span className="text-[10px] bg-green-500/10 text-green-500 px-2 py-0.5 rounded border border-green-500/20">Solidity</span>
-                            </div>
-                        </div>
-                    </BentoCard>
-
-                    {/* 6. LinkedIn */}
-                    <BentoCard href={USER_DATA.socials.linkedin} className="hover:bg-[#0077b5]/10 hover:border-[#0077b5]/30">
-                        <Linkedin size={28} className="text-[#0077b5] mb-4" />
-                        <h4 className="font-semibold">LinkedIn</h4>
-                        <p className="text-xs text-gray-500">Professional</p>
-                    </BentoCard>
-
-                    {/* 7. Farcaster */}
-                    <BentoCard href={USER_DATA.socials.farcaster} className="bg-[#855DCD]/5 hover:bg-[#855DCD]/10 hover:border-[#855DCD]/30">
-                        <Globe size={28} className="text-[#855DCD] mb-4" />
-                        <h4 className="font-semibold">Farcaster</h4>
-                        <p className="text-xs text-gray-500">Warpcast</p>
-                    </BentoCard>
-
-                    {/* 8. Automation / Raycast */}
-                    <BentoCard className="col-span-1 sm:col-span-2 flex flex-col justify-center bg-gradient-to-r from-red-900/20 to-orange-900/20 border-orange-500/10">
-                        <div className="flex items-center gap-3 mb-2">
-                            <Terminal size={20} className="text-orange-400" />
-                            <h4 className="font-bold text-orange-100">Automation Workflow</h4>
-                        </div>
-                        <p className="text-xs text-gray-400 mb-3">Powered by Raycast, Warp & custom Python scripts.</p>
-                        <div className="flex items-center gap-2">
-                            <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                                <div className="h-full bg-orange-500 w-[85%]"></div>
-                            </div>
-                            <span className="text-[10px] font-mono text-orange-400">85% Eff.</span>
-                        </div>
-                    </BentoCard>
-
+                {/* Main Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-20">
+                    {USER_DATA.links.map((link, index) => (
+                        <BentoCard key={index} item={link} />
+                    ))}
                 </div>
 
-                {/* Stats Dropdown */}
-                <div className="mt-8 border-t border-white/10 pt-4">
-                    <button
-                        onClick={() => setShowStats(!showStats)}
-                        className="flex items-center gap-2 text-xs text-gray-500 hover:text-white transition-colors cursor-pointer select-none"
-                    >
-                        <Code size={14} />
-                        <span>Stats for nerds</span>
-                        <span className={`transition-transform duration-300 ${showStats ? 'rotate-180' : ''}`}>▼</span>
-                    </button>
+                {/* Experience & Skills Split */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
 
-                    <div className={`overflow-hidden transition-all duration-500 ease-in-out ${showStats ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                        <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 max-w-2xl">
-                            <div className="col-span-1 md:col-span-2 mb-2 pb-2 border-b border-white/5 flex items-center justify-between">
-                                <span className="text-xs text-green-500 font-mono flex items-center gap-2">● Systems Operational</span>
-                                <span className="text-[10px] text-gray-600 font-mono border border-white/10 px-2 py-0.5 rounded">Built with React & Tailwind</span>
+                    {/* Experience Column */}
+                    <div className="md:col-span-7">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 rounded-lg bg-purple-500/10">
+                                <Briefcase size={20} className="text-purple-400" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Professional Journey</h3>
+                        </div>
+                        <div className="pl-2">
+                            {USER_DATA.experience.map((exp, index) => (
+                                <ExperienceCard key={index} exp={exp} />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Skills Column */}
+                    <div className="md:col-span-5">
+                        <div className="sticky top-8">
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="p-2 rounded-lg bg-yellow-500/10">
+                                    <Cpu size={20} className="text-yellow-400" />
+                                </div>
+                                <h3 className="text-xl font-bold text-white">Skills & Proficiency</h3>
                             </div>
 
-                            {HARDWARE_STATS.map((stat) => (
-                                <StatRow key={stat.label} label={stat.label} value={stat.value} />
-                            ))}
-
-                            <div className="col-span-1 md:col-span-2 mt-2 pt-2 border-t border-white/5 text-[10px] text-gray-600 font-mono">
-                                Session ID: {sessionId}
+                            <div className="glass-card rounded-3xl p-6">
+                                {Object.entries(USER_DATA.skills).map(([category, skills]) => (
+                                    <SkillGroup key={category} title={category} skills={skills} />
+                                ))}
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <footer className="mt-12 mb-6 text-center text-gray-600 text-xs">
+                <footer className="text-center text-gray-600 text-xs py-12 mt-12 border-t border-white/5">
                     <p>© 2025 Piczadev. All rights reserved.</p>
                 </footer>
 
