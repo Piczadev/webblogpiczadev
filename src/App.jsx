@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import {
     Github, Twitter, Linkedin, Terminal,
     Database, Copy, Check, ExternalLink,
@@ -365,6 +366,7 @@ export default function App() {
 
             </main>
             <Analytics />
+            <SpeedInsights />
         </div>
     );
 }
